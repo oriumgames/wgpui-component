@@ -6,11 +6,12 @@ use std::{
     time::Duration,
 };
 
+use crate::compat::Anchor;
 use gpui::{
-    Anchor, Animation, AnimationExt, AnyElement, App, AppContext, ClickEvent, Context,
-    DismissEvent, ElementId, Entity, EventEmitter, InteractiveElement as _, IntoElement,
-    ParentElement as _, Pixels, Render, SharedString, StatefulInteractiveElement, StyleRefinement,
-    Styled, Subscription, Window, div, prelude::FluentBuilder, px,
+    Animation, AnimationExt, AnyElement, App, AppContext, ClickEvent, Context, DismissEvent,
+    ElementId, Entity, EventEmitter, InteractiveElement as _, IntoElement, ParentElement as _,
+    Pixels, Render, SharedString, StatefulInteractiveElement, StyleRefinement, Styled,
+    Subscription, Window, div, prelude::FluentBuilder, px,
 };
 
 use crate::{
@@ -365,11 +366,14 @@ impl Render for Notification {
                     on_click(event, window, cx);
                 }))
             })
-            .on_aux_click(cx.listener(move |view, event: &ClickEvent, window, cx| {
-                if event.is_middle_click() {
+            // wgpui: no `on_aux_click`/`ClickEvent::is_middle_click`; use a
+            // direct middle-button mouse-up listener to dismiss.
+            .on_mouse_up(
+                gpui::MouseButton::Middle,
+                cx.listener(move |view, _event, window, cx| {
                     view.dismiss(window, cx);
-                }
-            }))
+                }),
+            )
             .with_animation(
                 ElementId::NamedInteger("slide-down".into(), closing as u64),
                 Animation::new(Duration::from_secs_f64(0.25))

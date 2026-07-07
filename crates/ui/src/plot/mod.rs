@@ -5,6 +5,7 @@ pub mod scale;
 pub mod shape;
 pub mod tooltip;
 
+use crate::compat::PixelsExt as _;
 pub use gpui_component_macros::IntoPlot;
 
 use std::{fmt::Debug, ops::Add};

@@ -1,3 +1,4 @@
+use crate::compat::{Accessible as _, Role};
 use std::rc::Rc;
 
 use crate::theme::ActiveTheme;
@@ -5,9 +6,8 @@ use gpui::Corners;
 use gpui::Window;
 use gpui::{AnyElement, App, Context, Edges, Entity, EventEmitter, FocusHandle, Focusable};
 use gpui::{
-    InteractiveElement, IntoElement, KeyBinding, ParentElement, RenderOnce, Role, SharedString,
-    StatefulInteractiveElement as _, StyleRefinement, Styled, TextAlign, actions,
-    prelude::FluentBuilder as _,
+    InteractiveElement, IntoElement, KeyBinding, ParentElement, RenderOnce, SharedString,
+    StyleRefinement, Styled, TextAlign, actions, prelude::FluentBuilder as _,
 };
 
 use crate::{

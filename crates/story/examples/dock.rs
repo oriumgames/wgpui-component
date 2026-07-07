@@ -1,5 +1,6 @@
 use anyhow::{Context as _, Result};
 use gpui::*;
+use gpui_component::compat::Anchor;
 use gpui_component::{
     IconName, Root, Sizable,
     button::{Button, ButtonVariants as _},
@@ -518,7 +519,9 @@ impl Render for StoryWorkspace {
             .child(
                 StatusBar::new()
                     .left(
-                        Button::new("toggle-left-dock").ghost().xsmall()
+                        Button::new("toggle-left-dock")
+                            .ghost()
+                            .xsmall()
                             .icon(IconName::PanelLeft)
                             .tooltip("Toggle Left Dock")
                             .on_click(cx.listener(|this, _, window, cx| {
@@ -528,7 +531,9 @@ impl Render for StoryWorkspace {
                             })),
                     )
                     .left(
-                        Button::new("toggle-bottom-dock").ghost().xsmall()
+                        Button::new("toggle-bottom-dock")
+                            .ghost()
+                            .xsmall()
                             .icon(IconName::PanelBottom)
                             .tooltip("Toggle Bottom Dock")
                             .on_click(cx.listener(|this, _, window, cx| {
@@ -538,7 +543,9 @@ impl Render for StoryWorkspace {
                             })),
                     )
                     .child(
-                        Button::new("toggle-right-dock").ghost().xsmall()
+                        Button::new("toggle-right-dock")
+                            .ghost()
+                            .xsmall()
                             .icon(IconName::PanelRight)
                             .tooltip("Toggle Right Dock")
                             .on_click(cx.listener(|this, _, window, cx| {
@@ -555,7 +562,7 @@ impl Render for StoryWorkspace {
 }
 
 fn main() {
-    let app = gpui_platform::application().with_assets(Assets);
+    let app = gpui::Application::new().with_assets(Assets);
 
     app.run(move |cx| {
         init(cx);

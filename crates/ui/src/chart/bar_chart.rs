@@ -1,3 +1,4 @@
+use crate::compat::{LinearColorStopExt as _, PixelsExt as _};
 use std::{ops::RangeInclusive, rc::Rc};
 
 use gpui::{
@@ -439,7 +440,11 @@ where
                     let chart_to_bar = |chart_value: f32| (chart_value - bar_lo) / bar_span;
                     let stops = fg(d, chart_range.clone(), &chart_to_bar);
                     let [s0, s1] = clip_stops_to_bar(stops);
-                    let bg: Background = linear_gradient(alignment.gradient_angle(), s0, s1);
+                    let bg: Background = linear_gradient(
+                        alignment.gradient_angle(),
+                        s0.to_gradient_stop(),
+                        s1.to_gradient_stop(),
+                    );
                     bg
                 })
             }

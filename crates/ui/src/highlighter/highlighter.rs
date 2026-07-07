@@ -1157,7 +1157,7 @@ fn collect_query_nodes_inner<'a>(
 /// Merge other style (Other on top)
 fn merge_highlight_style(style: &mut HighlightStyle, other: &HighlightStyle) {
     if let Some(color) = other.color {
-        style.color = Some(color);
+        style.color = Some(color.into());
     }
     if let Some(font_weight) = other.font_weight {
         style.font_weight = Some(font_weight);
@@ -1188,7 +1188,7 @@ mod tests {
 
     fn color_style(color: Hsla) -> HighlightStyle {
         let mut style = HighlightStyle::default();
-        style.color = Some(color);
+        style.color = Some(color.into());
         style
     }
 
@@ -1235,7 +1235,11 @@ mod tests {
         if left.len() != right.len() {
             println!("\n---------------------------------------------");
             for (range, style) in left.iter() {
-                println!("({:?}, {})", range, color_name(style.color));
+                println!(
+                    "({:?}, {})",
+                    range,
+                    color_name(style.color.map(|c| c.to_hsla()))
+                );
             }
             println!("---------------------------------------------");
             panic!("left {} styles, right {} styles", left.len(), right.len());
@@ -1245,9 +1249,9 @@ mod tests {
                 panic!(
                     "\n left: ({:?}, {})\nright: ({:?}, {})\n",
                     left.0,
-                    color_name(left.1.color),
+                    color_name(left.1.color.map(|c| c.to_hsla())),
                     right.0,
-                    color_name(right.1.color)
+                    color_name(right.1.color.map(|c| c.to_hsla()))
                 );
             }
         }

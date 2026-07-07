@@ -126,7 +126,7 @@ pub struct ThemeStyle {
 impl From<ThemeStyle> for HighlightStyle {
     fn from(style: ThemeStyle) -> Self {
         HighlightStyle {
-            color: style.color,
+            color: style.color.map(Into::into),
             font_weight: style.font_weight.map(|w| match w {
                 FontWeightContent::Thin => gpui::FontWeight::THIN,
                 FontWeightContent::ExtraLight => gpui::FontWeight::EXTRA_LIGHT,

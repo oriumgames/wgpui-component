@@ -1,10 +1,11 @@
+use crate::compat::{Accessible as _, Role};
 use std::rc::Rc;
 
 use gpui::prelude::FluentBuilder as _;
 use gpui::{
     AnyElement, App, DefiniteLength, Edges, EdgesRefinement, Entity, Hsla, InteractiveElement as _,
-    IntoElement, MouseButton, MouseDownEvent, ParentElement as _, Rems, RenderOnce, Role,
-    StatefulInteractiveElement as _, StyleRefinement, Styled, TextAlign, Window, div, px, relative,
+    IntoElement, MouseButton, MouseDownEvent, ParentElement as _, Rems, RenderOnce,
+    StyleRefinement, Styled, TextAlign, Window, div, px, relative,
 };
 
 use crate::button::{Button, ButtonVariants as _};
@@ -342,7 +343,12 @@ impl Styled for Input {
 impl RenderOnce for Input {
     fn render(self, window: &mut Window, cx: &mut App) -> impl IntoElement {
         const LINE_HEIGHT: Rems = Rems(1.25);
-        let text_align = self.style.text.text_align.unwrap_or(TextAlign::Left);
+        let text_align = self
+            .style
+            .text
+            .as_ref()
+            .and_then(|t| t.text_align)
+            .unwrap_or(TextAlign::Left);
 
         self.state.update(cx, |state, _| {
             state.context_menu_builder = self.context_menu_builder.clone();

@@ -1,10 +1,11 @@
 use std::rc::Rc;
 
 use gpui::{
-    Anchor, AnyElement, App, AppContext, Context, Entity, FocusHandle, InteractiveElement as _,
+    AnyElement, App, AppContext, Context, Entity, FocusHandle, InteractiveElement as _,
     IntoElement, MouseButton, ParentElement as _, Render, SharedString, Styled as _, Subscription,
     Window, div, px,
 };
+use gpui_component::compat::{Anchor, PixelsExt as _};
 use gpui_component::{
     ActiveTheme as _, IconName, Side, Sizable as _, Theme, TitleBar, WindowExt as _,
     badge::Badge,

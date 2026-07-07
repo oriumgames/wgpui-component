@@ -1,8 +1,9 @@
 use gpui::{
-    Action, Anchor, App, AppContext, Context, DismissEvent, Entity, EventEmitter, FocusHandle,
-    Focusable, Half, InteractiveElement, IntoElement, KeyBinding, MouseButton, ParentElement as _,
-    Render, Styled as _, WeakEntity, Window, actions, div, px,
+    Action, App, AppContext, Context, DismissEvent, Entity, EventEmitter, FocusHandle, Focusable,
+    Half, InteractiveElement, IntoElement, KeyBinding, MouseButton, ParentElement as _, Render,
+    Styled as _, WeakEntity, Window, actions, div, px,
 };
+use gpui_component::compat::Anchor;
 use gpui_component::{
     ActiveTheme, StyledExt, WindowExt,
     button::{Button, ButtonVariants as _},

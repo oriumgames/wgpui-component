@@ -1,3 +1,4 @@
+use crate::compat::LinearColorStopExt as _;
 use std::{collections::HashMap, fmt::Display};
 
 use gpui::{
@@ -750,7 +751,11 @@ pub fn try_parse_background(background: &str) -> Result<Background> {
     }
 
     let gradient = parse_linear_gradient(background)?;
-    Ok(linear_gradient(gradient.angle, gradient.from, gradient.to))
+    Ok(linear_gradient(
+        gradient.angle,
+        gradient.from.to_gradient_stop(),
+        gradient.to.to_gradient_stop(),
+    ))
 }
 
 /// Parse a background, clamping every color stop's alpha to at most `max`.
@@ -769,8 +774,8 @@ pub(crate) fn try_parse_background_clamped(background: &str, max: f32) -> Result
     };
     Ok(linear_gradient(
         gradient.angle,
-        clamp(gradient.from),
-        clamp(gradient.to),
+        clamp(gradient.from).to_gradient_stop(),
+        clamp(gradient.to).to_gradient_stop(),
     ))
 }
 
@@ -1101,8 +1106,8 @@ mod tests {
             try_parse_background("linear-gradient(135deg, #4F46E5, #06B6D4)").unwrap(),
             gpui::linear_gradient(
                 135.,
-                gpui::linear_color_stop(from, 0.),
-                gpui::linear_color_stop(to, 1.)
+                gpui::gradient_color_stop(from, 0.),
+                gpui::gradient_color_stop(to, 1.)
             )
         );
     }
@@ -1113,8 +1118,8 @@ mod tests {
             try_parse_background("linear-gradient(to right, red-500 25%, blue-600 75%)").unwrap(),
             gpui::linear_gradient(
                 90.,
-                gpui::linear_color_stop(crate::red_500(), 0.25),
-                gpui::linear_color_stop(crate::blue_600(), 0.75)
+                gpui::gradient_color_stop(crate::red_500(), 0.25),
+                gpui::gradient_color_stop(crate::blue_600(), 0.75)
             )
         );
     }

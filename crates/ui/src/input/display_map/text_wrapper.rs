@@ -1,9 +1,8 @@
-use std::ops::Range;
 use gpui::Half;
+use std::ops::Range;
 
 use gpui::{
-    App, Font, LineFragment, Pixels, Point, ShapedLine, Size, TextAlign, Window, point, px,
-    size,
+    App, Font, LineFragment, Pixels, Point, ShapedLine, Size, TextAlign, Window, point, px, size,
 };
 use ropey::Rope;
 use smallvec::SmallVec;
@@ -144,9 +143,9 @@ impl TextWrapper {
         new_text: &Rope,
         cx: &mut App,
     ) {
-        let mut line_wrapper = cx
-            .text_system()
-            .line_wrapper(self.font.clone(), self.font_size);
+        let mut line_wrapper =
+            cx.text_system()
+                .line_wrapper(self.font.clone(), self.font_size, None);
         self._update(
             changed_text,
             range,
@@ -545,17 +544,16 @@ impl LineLayout {
         &self,
         pos: Point<Pixels>,
         line_height: Pixels,
-        text_align: TextAlign,
-        align_width: Option<Pixels>,
+        _text_align: TextAlign,
+        _align_width: Option<Pixels>,
         window: &mut Window,
         cx: &mut App,
     ) {
         for (ix, line) in self.wrapped_lines.iter().enumerate() {
+            // wgpui: ShapedLine::paint has no align/bounds params.
             _ = line.paint(
                 pos + point(px(0.), ix * line_height),
                 line_height,
-                text_align,
-                align_width,
                 window,
                 cx,
             );
@@ -575,7 +573,7 @@ impl LineLayout {
                     pos.y + *line_index as f32 * line_height,
                 );
 
-                _ = invisible.paint(origin, line_height, text_align, align_width, window, cx);
+                _ = invisible.paint(origin, line_height, window, cx);
             }
         }
     }

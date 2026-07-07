@@ -1,3 +1,4 @@
+use crate::compat::PixelsExt as _;
 use std::rc::Rc;
 
 use gpui::{

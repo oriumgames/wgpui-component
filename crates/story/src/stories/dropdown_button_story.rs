@@ -1,7 +1,8 @@
-use gpui::{ Anchor,
-    Action, App, AppContext as _, Context, Entity, Focusable, IntoElement,
-    ParentElement as _, Render, Styled as _, Window, prelude::FluentBuilder as _,
+use gpui::{
+    Action, App, AppContext as _, Context, Entity, Focusable, IntoElement, ParentElement as _,
+    Render, Styled as _, Window, prelude::FluentBuilder as _,
 };
+use gpui_component::compat::Anchor;
 use serde::Deserialize;
 
 use crate::section;

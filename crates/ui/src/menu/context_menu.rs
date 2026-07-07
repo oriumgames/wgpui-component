@@ -1,10 +1,11 @@
 use std::{cell::RefCell, rc::Rc};
 
+use crate::compat::Anchor;
 use gpui::{
-    Anchor, AnyElement, App, Context, DismissEvent, Element, ElementId, Entity, Focusable,
-    GlobalElementId, Hitbox, HitboxBehavior, InspectorElementId, InteractiveElement, IntoElement,
-    MouseButton, MouseDownEvent, ParentElement, Pixels, Point, StyleRefinement, Styled,
-    Subscription, Window, anchored, deferred, div, prelude::FluentBuilder, px,
+    AnyElement, App, Context, DismissEvent, Element, ElementId, Entity, Focusable, GlobalElementId,
+    Hitbox, HitboxBehavior, InspectorElementId, InteractiveElement, IntoElement, MouseButton,
+    MouseDownEvent, ParentElement, Pixels, Point, StyleRefinement, Styled, Subscription, Window,
+    anchored, deferred, div, prelude::FluentBuilder, px,
 };
 
 use crate::menu::PopupMenu;
@@ -190,7 +191,7 @@ impl<E: ParentElement + Styled + IntoElement + 'static> Element for ContextMenu<
                                             anchored()
                                                 .position(position)
                                                 .snap_to_window_with_margin(px(8.))
-                                                .anchor(anchor)
+                                                .anchor(anchor.to_corner())
                                                 .when_some(menu_view, |this, menu| {
                                                     // Focus the menu, so that can be handle the action.
                                                     if !menu

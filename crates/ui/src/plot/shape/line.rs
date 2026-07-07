@@ -1,5 +1,6 @@
 // @reference: https://d3js.org/d3-shape/line
 
+use crate::compat::PixelsExt as _;
 use gpui::{
     Background, BorderStyle, Bounds, Hsla, PaintQuad, Path, PathBuilder, Pixels, Point, Window, px,
     quad, size,

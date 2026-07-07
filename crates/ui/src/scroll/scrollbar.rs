@@ -2,9 +2,10 @@ use std::{cell::Cell, ops::Deref, panic::Location, rc::Rc};
 
 use instant::{Duration, Instant};
 
+use crate::compat::{Anchor, BoundsExt as _};
 use crate::{ActiveTheme, AxisExt};
 use gpui::{
-    Anchor, App, Axis, Background, BorderStyle, Bounds, ContentMask, CursorStyle, Edges, Element,
+    App, Axis, Background, BorderStyle, Bounds, ContentMask, CursorStyle, Edges, Element,
     ElementId, GlobalElementId, Hitbox, HitboxBehavior, Hsla, InspectorElementId, IntoElement,
     IsZero, LayoutId, ListState, MouseDownEvent, MouseMoveEvent, MouseUpEvent, PaintQuad, Pixels,
     Point, Position, ScrollHandle, ScrollWheelEvent, Size, Style, UniformListScrollHandle, Window,

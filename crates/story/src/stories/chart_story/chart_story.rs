@@ -166,16 +166,16 @@ impl Render for ChartStory {
                         .stroke(cx.theme().chart_1)
                         .fill(linear_gradient(
                             0.,
-                            linear_color_stop(cx.theme().chart_1.opacity(0.4), 1.),
-                            linear_color_stop(cx.theme().background.opacity(0.3), 0.),
+                            gpui::gradient_color_stop(cx.theme().chart_1.opacity(0.4), 1.),
+                            gpui::gradient_color_stop(cx.theme().background.opacity(0.3), 0.),
                         ))
                         .name("Desktop")
                         .y(|d| d.mobile)
                         .stroke(cx.theme().chart_2)
                         .fill(linear_gradient(
                             0.,
-                            linear_color_stop(cx.theme().chart_2.opacity(0.4), 1.),
-                            linear_color_stop(cx.theme().background.opacity(0.3), 0.),
+                            gpui::gradient_color_stop(cx.theme().chart_2.opacity(0.4), 1.),
+                            gpui::gradient_color_stop(cx.theme().background.opacity(0.3), 0.),
                         ))
                         .name("Mobile")
                         .tick_margin(8)
@@ -470,8 +470,8 @@ impl Render for ChartStory {
                                     };
                                     linear_gradient(
                                         45.,
-                                        linear_color_stop(lerp(lo), 0.),
-                                        linear_color_stop(lerp(hi), 1.),
+                                        gpui::gradient_color_stop(lerp(lo), 0.),
+                                        gpui::gradient_color_stop(lerp(hi), 1.),
                                     )
                                 }),
                             false,
@@ -567,8 +567,8 @@ impl Render for ChartStory {
                             .y(|d| d.desktop)
                             .fill(linear_gradient(
                                 0.,
-                                linear_color_stop(cx.theme().chart_1.opacity(0.4), 1.),
-                                linear_color_stop(cx.theme().background.opacity(0.3), 0.),
+                                gpui::gradient_color_stop(cx.theme().chart_1.opacity(0.4), 1.),
+                                gpui::gradient_color_stop(cx.theme().background.opacity(0.3), 0.),
                             ))
                             .id("area-chart-gradient"),
                         false,

@@ -185,23 +185,10 @@ pub fn init(cx: &mut App) {
     themes::init(cx);
     stories::init(cx);
 
-    #[cfg(not(target_family = "wasm"))]
-    {
-        let http_client =
-            reqwest_client::ReqwestClient::user_agent("gpui-component/story").unwrap();
-        cx.set_http_client(std::sync::Arc::new(http_client));
-    }
-
-    #[cfg(target_family = "wasm")]
-    {
-        // Safety: the web examples run single-threaded; the client is
-        // created and used exclusively on the main thread.
-        let http_client = unsafe {
-            gpui_web::FetchHttpClient::with_user_agent("gpui-component/story")
-                .expect("failed to create FetchHttpClient")
-        };
-        cx.set_http_client(std::sync::Arc::new(http_client));
-    }
+    // NOTE: The gpui-ce/wgpui lineage does not ship a bundled HTTP client
+    // (there is no `reqwest_client`/`gpui_web` crate as in upstream zed gpui).
+    // Network-backed features (e.g. loading images from URLs) are disabled until
+    // a `gpui::http_client::HttpClient` implementation is wired up here.
 
     cx.bind_keys([
         KeyBinding::new("/", ToggleSearch, None),

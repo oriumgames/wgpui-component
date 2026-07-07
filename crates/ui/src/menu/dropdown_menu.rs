@@ -1,7 +1,8 @@
 use std::rc::Rc;
 
+use crate::compat::Anchor;
 use gpui::{
-    Anchor, Context, DismissEvent, ElementId, Entity, Focusable, InteractiveElement, IntoElement,
+    Context, DismissEvent, ElementId, Entity, Focusable, InteractiveElement, IntoElement,
     RenderOnce, SharedString, StyleRefinement, Styled, Window,
 };
 

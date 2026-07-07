@@ -1,3 +1,4 @@
+use crate::compat::PixelsExt as _;
 use crate::{
     ActiveTheme, Collapsible, Icon, IconName, Side, Sizable, StyledExt,
     button::{Button, ButtonVariants},

@@ -1,8 +1,9 @@
+use crate::compat::{Anchor, BoundsExt as _};
 use gpui::{
-    Anchor, AnyElement, App, Bounds, Context, Deferred, DismissEvent, Div, ElementId,
-    EventEmitter, FocusHandle, Focusable, InteractiveElement as _, IntoElement, KeyBinding,
-    MouseButton, ParentElement, Pixels, Point, Render, RenderOnce, Stateful, StyleRefinement,
-    Styled, Subscription, Window, anchored, deferred, div, prelude::FluentBuilder as _, px,
+    AnyElement, App, Bounds, Context, Deferred, DismissEvent, Div, ElementId, EventEmitter,
+    FocusHandle, Focusable, InteractiveElement as _, IntoElement, KeyBinding, MouseButton,
+    ParentElement, Pixels, Point, Render, RenderOnce, Stateful, StyleRefinement, Styled,
+    Subscription, Window, anchored, deferred, div, prelude::FluentBuilder as _, px,
 };
 use std::{cell::Cell, rc::Rc};
 
@@ -335,7 +336,7 @@ impl Popover {
         deferred(
             anchored()
                 .snap_to_window_with_margin(px(8.))
-                .anchor(anchor)
+                .anchor(anchor.to_corner())
                 .position(position.get())
                 .child(div().relative().child(content)),
         )

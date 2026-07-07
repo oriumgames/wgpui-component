@@ -134,7 +134,7 @@ where
             .map(|this| match self.axis {
                 ScrollbarAxis::Vertical => this.h_auto().min_h_full(),
                 ScrollbarAxis::Horizontal => this.w_auto().min_w_full(),
-                ScrollbarAxis::Both => this.size_auto().min_size_full(),
+                ScrollbarAxis::Both => this.size_auto().min_w_full().min_h_full(),
             });
 
         let scroll_area = div()
@@ -332,31 +332,28 @@ mod tests {
 
     impl Render for IssueGapRegressionTest {
         fn render(&mut self, _: &mut Window, _: &mut Context<Self>) -> impl IntoElement {
-            div()
-                .w(px(100.))
-                .h(px(100.))
-                .child(
-                    crate::v_flex()
-                        .flex_1()
-                        .gap(px(30.))
-                        .overflow_y_scrollbar()
-                        .px(px(12.))
-                        .pb(px(16.))
-                        .children((0..5).map(|ix| {
-                            div()
-                                .h(px(20.))
-                                .flex_shrink_0()
-                                .when(ix == 0, |this| {
-                                    this.debug_selector(|| "issue-first-card".to_string())
-                                })
-                                .when(ix == 1, |this| {
-                                    this.debug_selector(|| "issue-second-card".to_string())
-                                })
-                                .when(ix == 4, |this| {
-                                    this.debug_selector(|| "issue-last-card".to_string())
-                                })
-                        })),
-                )
+            div().w(px(100.)).h(px(100.)).child(
+                crate::v_flex()
+                    .flex_1()
+                    .gap(px(30.))
+                    .overflow_y_scrollbar()
+                    .px(px(12.))
+                    .pb(px(16.))
+                    .children((0..5).map(|ix| {
+                        div()
+                            .h(px(20.))
+                            .flex_shrink_0()
+                            .when(ix == 0, |this| {
+                                this.debug_selector(|| "issue-first-card".to_string())
+                            })
+                            .when(ix == 1, |this| {
+                                this.debug_selector(|| "issue-second-card".to_string())
+                            })
+                            .when(ix == 4, |this| {
+                                this.debug_selector(|| "issue-last-card".to_string())
+                            })
+                    })),
+            )
         }
     }
 
@@ -414,28 +411,20 @@ mod tests {
                 .h(px(100.))
                 .gap(px(20.))
                 .child(
-                    div()
-                        .w(px(100.))
-                        .h(px(100.))
-                        .overflow_y_scrollbar()
-                        .child(
-                            crate::v_flex()
-                                .child(plain_row(50.))
-                                .child(plain_row(50.))
-                                .child(row("left-scrollable-last-row", 50.)),
-                        ),
+                    div().w(px(100.)).h(px(100.)).overflow_y_scrollbar().child(
+                        crate::v_flex()
+                            .child(plain_row(50.))
+                            .child(plain_row(50.))
+                            .child(row("left-scrollable-last-row", 50.)),
+                    ),
                 )
                 .child(
-                    div()
-                        .w(px(100.))
-                        .h(px(100.))
-                        .overflow_y_scrollbar()
-                        .child(
-                            crate::v_flex()
-                                .child(plain_row(50.))
-                                .child(plain_row(50.))
-                                .child(row("right-scrollable-last-row", 50.)),
-                        ),
+                    div().w(px(100.)).h(px(100.)).overflow_y_scrollbar().child(
+                        crate::v_flex()
+                            .child(plain_row(50.))
+                            .child(plain_row(50.))
+                            .child(row("right-scrollable-last-row", 50.)),
+                    ),
                 )
         }
     }

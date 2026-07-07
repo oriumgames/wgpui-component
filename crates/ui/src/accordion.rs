@@ -1,8 +1,9 @@
+use crate::compat::{Accessible as _, Role};
 use std::{cell::RefCell, collections::HashSet, rc::Rc, sync::Arc};
 
 use gpui::{
     AnyElement, App, ElementId, InteractiveElement as _, IntoElement, ParentElement, RenderOnce,
-    Role, SharedString, StatefulInteractiveElement as _, Styled, Window, div,
+    SharedString, StatefulInteractiveElement as _, Styled, Window, div,
     prelude::FluentBuilder as _, rems,
 };
 

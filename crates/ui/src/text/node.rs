@@ -30,6 +30,7 @@ use crate::{
 };
 
 use super::{TextViewStyle, utils::list_item_prefix};
+use crate::compat::FlexExt as _;
 
 thread_local! {
     static CODE_BLOCK_HIGHLIGHTERS: RefCell<HashMap<SharedString, SyntaxHighlighter>> =
@@ -890,7 +891,7 @@ impl Paragraph {
                     }
 
                     if let Some(mut link_mark) = style.link.clone() {
-                        highlight.color = Some(cx.theme().link);
+                        highlight.color = Some(cx.theme().link.into());
                         highlight.underline = Some(gpui::UnderlineStyle {
                             thickness: gpui::px(1.),
                             ..Default::default()
@@ -1004,7 +1005,7 @@ impl Paragraph {
                     }
 
                     if let Some(mut link_mark) = style.link.clone() {
-                        highlight.color = Some(cx.theme().link);
+                        highlight.color = Some(cx.theme().link.into());
                         highlight.underline = Some(gpui::UnderlineStyle {
                             thickness: gpui::px(1.),
                             ..Default::default()
@@ -1475,7 +1476,7 @@ impl BlockNode {
                         // keeps columns from collapsing when the table is wider
                         // than the viewport and scrolls.
                         .flex_basis(px(width))
-                        .flex_grow(width)
+                        .flex_grow_amount(width)
                         .flex_shrink_0()
                         .overflow_hidden()
                         .whitespace_nowrap()

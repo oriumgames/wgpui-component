@@ -460,7 +460,7 @@ mod tests {
             "unloaded inline image fallback should stay generic and compact"
         );
     }
-  
+
     #[test]
     fn plugin_accepts_text_view_plugins_beyond_markdown() {
         let view = TextView::markdown("plugin-test", "").plugin(DummyTextViewPlugin);
@@ -635,7 +635,7 @@ mod tests {
         });
 
         let total = |p: &ListState| {
-            f32::from(p.max_offset_for_scrollbar().y + p.viewport_bounds().size.height)
+            f32::from(p.max_offset_for_scrollbar().height + p.viewport_bounds().size.height)
         };
         let mut totals = vec![total(&probe)];
         for _ in 0..20 {

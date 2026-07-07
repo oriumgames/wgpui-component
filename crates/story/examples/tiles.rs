@@ -434,7 +434,7 @@ impl Render for StoryTiles {
 }
 
 fn main() {
-    let app = gpui_platform::application().with_assets(Assets);
+    let app = gpui::Application::new().with_assets(Assets);
 
     app.run(move |cx| {
         gpui_component::init(cx);
@@ -446,7 +446,6 @@ fn main() {
         cx.set_menus(vec![Menu {
             name: "GPUI App".into(),
             items: vec![MenuItem::action("Quit", Quit)],
-            disabled: false,
         }]);
         cx.activate(true);
 

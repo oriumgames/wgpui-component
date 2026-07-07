@@ -1,3 +1,4 @@
+use crate::compat::PixelsExt as _;
 use std::fmt::Debug;
 
 use gpui::{
@@ -20,10 +21,11 @@ fn shape_label(
     let text_run = TextRun {
         len: text.len(),
         font: window.text_style().font(),
-        color,
+        color: color.into(),
         background_color: None,
         underline: None,
         strikethrough: None,
+        letter_spacing: None,
     };
     window
         .text_system()
@@ -48,7 +50,7 @@ pub fn measure_text_width(text: &SharedString, font_size: Pixels, window: &mut W
         },
         window,
     )
-    .width()
+    .width
     .as_f32()
 }
 
@@ -130,10 +132,11 @@ impl PlotLabel {
             let line = shape_label(text, *font_size, *color, window);
             let origin = match align {
                 TextAlign::Left => origin,
-                TextAlign::Right => origin - point(line.width(), px(0.)),
-                _ => origin - point(line.width() / 2., px(0.)),
+                TextAlign::Right => origin - point(line.width, px(0.)),
+                _ => origin - point(line.width / 2., px(0.)),
             };
-            let _ = line.paint(origin, *font_size, *align, None, window, cx);
+            // wgpui: ShapedLine::paint has no align/bounds params.
+            let _ = line.paint(origin, *font_size, window, cx);
         }
     }
 }

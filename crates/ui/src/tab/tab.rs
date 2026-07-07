@@ -1,3 +1,4 @@
+use crate::compat::{Accessible as _, Role};
 use std::{rc::Rc, time::Duration};
 
 use crate::animation::{Lerp, ease_in_out_cubic};
@@ -5,7 +6,7 @@ use crate::{ActiveTheme, Icon, IconName, Selectable, Sizable, Size, StyledExt, h
 use gpui::prelude::FluentBuilder as _;
 use gpui::{
     Animation, AnimationExt as _, AnyElement, App, Background, ClickEvent, Div, Edges, ElementId,
-    Hsla, InteractiveElement, IntoElement, MouseButton, ParentElement, Pixels, RenderOnce, Role,
+    Hsla, InteractiveElement, IntoElement, MouseButton, ParentElement, Pixels, RenderOnce,
     SharedString, StatefulInteractiveElement, Styled, Window, div, px, relative,
 };
 
@@ -486,7 +487,7 @@ impl Tab {
         self
     }
 
-    fn a11y_label(&self) -> Option<SharedString> {
+    fn computed_a11y_label(&self) -> Option<SharedString> {
         self.aria_label.clone().or_else(|| self.label.clone())
     }
 
@@ -629,7 +630,7 @@ impl RenderOnce for Tab {
         let inner_margins = self.variant.inner_margins(self.size);
         let inner_height = self.variant.inner_height(self.size);
         let height = self.variant.height(self.size);
-        let aria_label = self.a11y_label();
+        let aria_label = self.computed_a11y_label();
 
         let segmented_indicator_active =
             self.variant == TabVariant::Segmented && self.indicator_active;
@@ -807,13 +808,13 @@ mod tests {
     fn a11y_label_defaults_to_visible_label(_cx: &mut gpui::TestAppContext) {
         let tab = Tab::new().label("Account");
 
-        assert_eq!(tab.a11y_label(), Some("Account".into()));
+        assert_eq!(tab.computed_a11y_label(), Some("Account".into()));
     }
 
     #[gpui::test]
     fn explicit_a11y_label_overrides_visible_label(_cx: &mut gpui::TestAppContext) {
         let tab = Tab::new().label("Acct").aria_label("Account settings");
 
-        assert_eq!(tab.a11y_label(), Some("Account settings".into()));
+        assert_eq!(tab.computed_a11y_label(), Some("Account settings".into()));
     }
 }

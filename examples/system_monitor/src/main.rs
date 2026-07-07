@@ -440,8 +440,8 @@ impl SystemMonitor {
                     .stroke(color)
                     .fill(linear_gradient(
                         0.,
-                        linear_color_stop(color.opacity(0.4), 1.),
-                        linear_color_stop(cx.theme().background.opacity(0.1), 0.),
+                        gpui::gradient_color_stop(color.opacity(0.4), 1.),
+                        gpui::gradient_color_stop(cx.theme().background.opacity(0.1), 0.),
                     ))
                     .tick_margin(15),
             )
@@ -599,7 +599,7 @@ impl Render for SystemMonitor {
 }
 
 fn main() {
-    let app = gpui_platform::application().with_assets(gpui_component_assets::Assets);
+    let app = gpui::Application::new().with_assets(gpui_component_assets::Assets);
 
     app.run(move |cx| {
         gpui_component::init(cx);

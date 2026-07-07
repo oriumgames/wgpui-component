@@ -2,6 +2,8 @@ use gpui::{App, SharedString};
 use std::ops::Deref;
 
 mod async_util;
+/// Compatibility shims for the wgpui backend (see [`compat`]).
+pub mod compat;
 mod element_ext;
 mod event;
 mod focus_trap;

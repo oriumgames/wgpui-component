@@ -3,6 +3,7 @@
 use gpui::{
     AnyElement, App, Bounds, ElementId, IntoElement, Pixels, Point, TextAlign, Window, point, px,
 };
+use gpui_component::compat::PixelsExt as _;
 use gpui_component::{
     ActiveTheme,
     plot::{

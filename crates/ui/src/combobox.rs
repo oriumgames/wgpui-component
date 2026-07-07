@@ -1,7 +1,8 @@
+use crate::compat::{Accessible as _, Role};
 use gpui::{
     AnyElement, App, Bounds, ClickEvent, Context, DismissEvent, Edges, ElementId, Entity,
     EventEmitter, FocusHandle, Focusable, Hsla, InteractiveElement, IntoElement, KeyBinding,
-    Length, MouseDownEvent, ParentElement, Pixels, Render, RenderOnce, Role, SharedString,
+    Length, MouseDownEvent, ParentElement, Pixels, Render, RenderOnce, SharedString,
     StatefulInteractiveElement, StyleRefinement, Styled, Window, anchored, deferred, div,
     prelude::FluentBuilder, px, rems,
 };

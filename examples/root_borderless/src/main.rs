@@ -51,7 +51,7 @@ impl Render for RootBorderlessExample {
 }
 
 fn main() {
-    gpui_platform::application().run(move |cx| {
+    gpui::Application::new().run(move |cx| {
         gpui_component::init(cx);
 
         let window_options = WindowOptions {

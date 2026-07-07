@@ -1,9 +1,10 @@
+use crate::compat::{Accessible as _, Role, Toggled};
 use std::{cell::Cell, rc::Rc};
 
 use gpui::{
     AnyElement, App, Corners, Edges, ElementId, InteractiveElement, IntoElement, ParentElement,
-    RenderOnce, Role, SharedString, StatefulInteractiveElement, StyleRefinement, Styled, Toggled,
-    Window, div, prelude::FluentBuilder as _,
+    RenderOnce, SharedString, StatefulInteractiveElement, StyleRefinement, Styled, Window, div,
+    prelude::FluentBuilder as _,
 };
 use smallvec::{SmallVec, smallvec};
 
@@ -157,7 +158,11 @@ impl RenderOnce for Toggle {
         div()
             .id(self.id)
             .role(Role::Button)
-            .aria_toggled(if checked { Toggled::True } else { Toggled::False })
+            .aria_toggled(if checked {
+                Toggled::True
+            } else {
+                Toggled::False
+            })
             .when_some(
                 self.tooltip.text.as_ref().map(|(text, _)| text.clone()),
                 |this, label| this.aria_label(label),

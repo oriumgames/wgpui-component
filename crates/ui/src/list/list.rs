@@ -1,7 +1,9 @@
+use crate::compat::{Accessible as _, Role};
 use instant::Duration;
 use std::ops::Range;
 
 use crate::actions::{Cancel, Confirm, SelectDown, SelectUp};
+use crate::compat::FlexExt as _;
 use crate::input::InputState;
 use crate::list::cache::{MeasuredEntrySize, RowEntry, RowsCache};
 use crate::{
@@ -14,7 +16,7 @@ use crate::{Icon, IndexPath, Selectable, Sizable, StyledExt};
 use crate::{VirtualListScrollHandle, list::ListDelegate, v_virtual_list};
 use gpui::{
     App, AvailableSpace, ClickEvent, Context, DefiniteLength, EdgesRefinement, EventEmitter,
-    ListSizingBehavior, RenderOnce, Role, ScrollStrategy, SharedString, StatefulInteractiveElement,
+    ListSizingBehavior, RenderOnce, ScrollStrategy, SharedString, StatefulInteractiveElement,
     StyleRefinement, Subscription, px, size,
 };
 use gpui::{

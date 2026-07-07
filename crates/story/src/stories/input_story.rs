@@ -1,7 +1,8 @@
 use gpui::{
     App, AppContext as _, ClickEvent, Context, Entity, InteractiveElement, IntoElement,
-    ParentElement as _, Render, Role, Styled, Subscription, Window, div,
+    ParentElement as _, Render, Styled, Subscription, Window, div,
 };
+use gpui_component::compat::Role;
 
 use crate::section;
 use gpui_component::{button::*, input::*, label::Label, *};

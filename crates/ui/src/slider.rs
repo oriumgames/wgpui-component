@@ -1,12 +1,13 @@
+use crate::compat::{Accessible as _, AccessibleAction, Orientation, Role};
 use std::ops::Range;
 
 use crate::{ActiveTheme, AxisExt, ElementExt, StyledExt, h_flex};
 use gpui::{
-    AccessibleAction, Along, App, AppContext as _, Axis, Background, Bounds, Context, Corners,
-    DefiniteLength, DragMoveEvent, Empty, Entity, EntityId, EventEmitter, InteractiveElement,
-    IntoElement, IsZero, MouseButton, MouseDownEvent, Orientation, ParentElement as _, Pixels,
-    Point, Render, RenderOnce, Role, StatefulInteractiveElement as _, StyleRefinement, Styled,
-    Window, div, prelude::FluentBuilder as _, px, relative,
+    Along, App, AppContext as _, Axis, Background, Bounds, Context, Corners, DefiniteLength,
+    DragMoveEvent, Empty, Entity, EntityId, EventEmitter, InteractiveElement, IntoElement, IsZero,
+    MouseButton, MouseDownEvent, ParentElement as _, Pixels, Point, Render, RenderOnce,
+    StatefulInteractiveElement as _, StyleRefinement, Styled, Window, div,
+    prelude::FluentBuilder as _, px, relative,
 };
 
 #[derive(Clone)]
@@ -567,8 +568,9 @@ impl RenderOnce for Slider {
         let thumb_bg: Background = self
             .style
             .text
-            .color
-            .map(Into::into)
+            .as_ref()
+            .and_then(|t| t.color)
+            .map(|c| c.to_hsla().into())
             .unwrap_or_else(|| cx.theme().tokens.slider_thumb.into());
         let corner_radii = self.style.corner_radii.clone();
         let default_radius = px(999.);

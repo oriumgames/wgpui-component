@@ -1,3 +1,4 @@
+use crate::compat::Anchor;
 use crate::{
     ActiveTheme, ElementExt, Placement, StyledExt,
     dialog::{ANIMATION_DURATION, Dialog},
@@ -11,10 +12,10 @@ use crate::{
     window_border,
 };
 use gpui::{
-    Anchor, AnyView, App, AppContext, Bounds, ClipboardItem, Context, DefiniteLength, ElementId,
-    Entity, EntityId, FocusHandle, Hitbox, InteractiveElement, IntoElement, KeyBinding,
-    ParentElement as _, Pixels, Render, StyleRefinement, Styled, WeakEntity, WeakFocusHandle,
-    Window, actions, div, prelude::FluentBuilder as _,
+    AnyView, App, AppContext, Bounds, ClipboardItem, Context, DefiniteLength, ElementId, Entity,
+    EntityId, FocusHandle, Hitbox, InteractiveElement, IntoElement, KeyBinding, ParentElement as _,
+    Pixels, Render, StyleRefinement, Styled, WeakEntity, WeakFocusHandle, Window, actions, div,
+    prelude::FluentBuilder as _,
 };
 use std::{any::TypeId, collections::HashMap, rc::Rc};
 

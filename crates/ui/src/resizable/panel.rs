@@ -3,6 +3,7 @@ use std::{
     rc::Rc,
 };
 
+use crate::compat::FlexExt as _;
 use gpui::{
     Along, AnyElement, App, AppContext, Axis, Bounds, Context, Element, ElementId, Empty, Entity,
     EventEmitter, InteractiveElement as _, IntoElement, IsZero as _, MouseMoveEvent, MouseUpEvent,

@@ -1,5 +1,6 @@
 // @reference: https://d3js.org/d3-shape/arc
 
+use crate::compat::PixelsExt as _;
 use std::{f32::consts::PI, fmt::Debug};
 
 use gpui::{Bounds, Hsla, Path, PathBuilder, Pixels, Point, Window, point, px};

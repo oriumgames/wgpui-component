@@ -1,7 +1,8 @@
 use gpui::{
-    Anchor, App, AppContext, Context, Entity, FocusHandle, Focusable, InteractiveElement as _,
-    IntoElement, ParentElement, Render, Styled, Window,
+    App, AppContext, Context, Entity, FocusHandle, Focusable, InteractiveElement as _, IntoElement,
+    ParentElement, Render, Styled, Window,
 };
+use gpui_component::compat::Anchor;
 
 use gpui_component::{
     ActiveTheme, Theme, WindowExt as _,

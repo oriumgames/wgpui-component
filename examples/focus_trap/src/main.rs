@@ -133,7 +133,7 @@ impl Render for Example {
 }
 
 fn main() {
-    let app = gpui_platform::application();
+    let app = gpui::Application::new();
 
     app.run(move |cx| {
         gpui_component::init(cx);

@@ -1,14 +1,16 @@
 use crate::actions::{Cancel, Confirm, SelectDown, SelectUp};
 use crate::actions::{SelectLeft, SelectRight};
+use crate::compat::Anchor;
+use crate::compat::{Accessible as _, Role};
 use crate::menu::menu_item::MenuItemElement;
 use crate::scroll::ScrollableElement;
 use crate::{ActiveTheme, ElementExt, Icon, IconName, Sizable as _, h_flex, v_flex};
 use crate::{Side, Size, StyledExt, kbd::Kbd};
 use gpui::{
-    Action, Anchor, AnyElement, App, AppContext, Bounds, Context, DismissEvent, Edges, Entity,
+    Action, AnyElement, App, AppContext, Bounds, Context, DismissEvent, Edges, Entity,
     EventEmitter, FocusHandle, Focusable, InteractiveElement, IntoElement, KeyBinding,
-    ParentElement, Pixels, Render, Role, ScrollHandle, SharedString, StatefulInteractiveElement,
-    Styled, WeakEntity, Window, anchored, div, prelude::FluentBuilder, px, rems,
+    ParentElement, Pixels, Render, ScrollHandle, SharedString, StatefulInteractiveElement, Styled,
+    WeakEntity, Window, anchored, div, prelude::FluentBuilder, px, rems,
 };
 use gpui::{ClickEvent, Half, MouseDownEvent, OwnedMenuItem, Point, Subscription};
 
@@ -698,14 +700,14 @@ impl PopupMenu {
                     name,
                     action,
                     checked,
-                    disabled,
                     ..
                 } => {
+                    // wgpui: OwnedMenuItem::Action has no `disabled` field.
                     self = self.menu_with_check_and_disabled(
                         name,
                         checked,
                         action.boxed_clone(),
-                        disabled,
+                        false,
                     )
                 }
                 OwnedMenuItem::Separator => {
@@ -1258,7 +1260,7 @@ impl PopupMenu {
                         let is_bottom_pos =
                             matches!(anchor, Anchor::BottomLeft | Anchor::BottomRight);
                         anchored()
-                            .anchor(anchor)
+                            .anchor(anchor.to_corner())
                             .child(
                                 div()
                                     .id("submenu")

@@ -8,7 +8,7 @@
 /// use gpui::*;
 /// use gpui_component_assets::Assets;
 ///
-/// let app = gpui_platform::application().with_assets(Assets);
+/// let app = gpui::Application::new().with_assets(Assets);
 /// ```
 ///
 /// ## Platform Differences

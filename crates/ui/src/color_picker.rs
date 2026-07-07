@@ -1,8 +1,9 @@
+use crate::compat::Anchor;
 use gpui::{
-    Anchor, App, AppContext, Context, Div, ElementId, Entity, EventEmitter, FocusHandle, Focusable,
-    Hsla, InteractiveElement as _, IntoElement, KeyBinding, ParentElement, Render, RenderOnce,
+    App, AppContext, Context, Div, ElementId, Entity, EventEmitter, FocusHandle, Focusable, Hsla,
+    InteractiveElement as _, IntoElement, KeyBinding, ParentElement, Render, RenderOnce,
     SharedString, Stateful, StatefulInteractiveElement as _, StyleRefinement, Styled, Subscription,
-    TextAlign, Window, div, hsla, linear_color_stop, linear_gradient, prelude::FluentBuilder as _,
+    TextAlign, Window, div, hsla, linear_gradient, prelude::FluentBuilder as _,
 };
 use rust_i18n::t;
 
@@ -561,7 +562,7 @@ impl ColorPicker {
                             .min_w_16()
                             .text_xs()
                             .text_color(label_color)
-                            .child(t!("ColorPicker.Hue")),
+                            .child(t!("ColorPicker.Hue").to_string()),
                     )
                     .child(
                         div()
@@ -595,7 +596,7 @@ impl ColorPicker {
                             .min_w_16()
                             .text_xs()
                             .text_color(label_color)
-                            .child(t!("ColorPicker.Saturation")),
+                            .child(t!("ColorPicker.Saturation").to_string()),
                     )
                     .child(
                         div()
@@ -633,7 +634,7 @@ impl ColorPicker {
                             .min_w_16()
                             .text_xs()
                             .text_color(label_color)
-                            .child(t!("ColorPicker.Lightness")),
+                            .child(t!("ColorPicker.Lightness").to_string()),
                     )
                     .child(
                         div()
@@ -667,7 +668,7 @@ impl ColorPicker {
                             .min_w_16()
                             .text_xs()
                             .text_color(label_color)
-                            .child(t!("ColorPicker.Alpha")),
+                            .child(t!("ColorPicker.Alpha").to_string()),
                     )
                     .child(
                         div()
@@ -717,8 +718,8 @@ impl ColorPicker {
             .overflow_hidden()
             .bg(linear_gradient(
                 90.,
-                linear_color_stop(start, 0.),
-                linear_color_stop(end, 1.),
+                gpui::gradient_color_stop(start, 0.),
+                gpui::gradient_color_stop(end, 1.),
             ))
     }
 }

@@ -1,7 +1,7 @@
 use std::borrow::Cow;
 
 use gpui::{prelude::*, *};
-use gpui_component::{theme::Theme, Root};
+use gpui_component::{Root, theme::Theme};
 use gpui_component_assets::Assets;
 use gpui_component_story::{Gallery, StoryRoot};
 use wasm_bindgen::prelude::*;
@@ -17,12 +17,12 @@ pub fn run() -> Result<(), JsValue> {
     tracing_wasm::set_as_global_default();
 
     #[cfg(target_family = "wasm")]
-    gpui_platform::web_init();
+    gpui::web_init();
     #[cfg(not(target_family = "wasm"))]
-    let app = gpui_platform::application();
+    let app = gpui::Application::new();
     #[cfg(target_family = "wasm")]
     let app = {
-        let app = gpui_platform::single_threaded_web();
+        let app = gpui::single_threaded_web();
 
         // Temporary fix: intentionally leak the `Rc<AppCell>` to keep the application alive
         struct WasmApplication(std::rc::Rc<AppCell>);
@@ -41,15 +41,11 @@ pub fn run() -> Result<(), JsValue> {
         // - Noto Sans SC: subset covering GB2312 Level 1 (~3755 common Chinese characters) + Latin
         // - Noto Emoji: monochrome emoji glyphs
         // - JetBrains Mono: code editor monospace font for story examples.
-        let cjk_font = Cow::Borrowed(
-            include_bytes!("../fonts/NotoSansSC-Regular-subset.ttf").as_slice(),
-        );
-        let emoji_font = Cow::Borrowed(
-            include_bytes!("../fonts/NotoEmoji-Regular.ttf").as_slice(),
-        );
-        let jetbrains_mono = Cow::Borrowed(
-            include_bytes!("../fonts/JetBrainsMono-Regular.ttf").as_slice(),
-        );
+        let cjk_font =
+            Cow::Borrowed(include_bytes!("../fonts/NotoSansSC-Regular-subset.ttf").as_slice());
+        let emoji_font = Cow::Borrowed(include_bytes!("../fonts/NotoEmoji-Regular.ttf").as_slice());
+        let jetbrains_mono =
+            Cow::Borrowed(include_bytes!("../fonts/JetBrainsMono-Regular.ttf").as_slice());
         cx.text_system()
             .add_fonts(vec![cjk_font, emoji_font, jetbrains_mono])
             .expect("Failed to load fonts");

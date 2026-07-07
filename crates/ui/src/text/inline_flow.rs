@@ -407,7 +407,7 @@ fn layout_flow(
                         });
                         let runs = runs_for_highlights(&subtext, text_style, highlights.clone());
                         let shaped_line = shape_line(subtext.clone(), font_size, &runs, window);
-                        let width = shaped_line.width();
+                        let width = shaped_line.width;
                         line_width += width;
                         line_fragments.push(LineFragmentLayout {
                             item_ix,
@@ -506,7 +506,7 @@ fn line_ranges(
     let font_size = text_style.font_size.to_pixels(rem_size);
     let mut wrapper = window
         .text_system()
-        .line_wrapper(text_style.font(), font_size);
+        .line_wrapper(text_style.font(), font_size, None);
     let boundaries = wrapper
         .wrap_line(&wrap_fragments, wrap_width)
         .map(|boundary| boundary.ix.min(total_len))

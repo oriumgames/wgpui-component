@@ -210,7 +210,7 @@ pub struct ThemeStyle {
 impl From<ThemeStyle> for HighlightStyle {
     fn from(style: ThemeStyle) -> Self {
         HighlightStyle {
-            color: style.color,
+            color: style.color.map(Into::into),
             font_weight: style.font_weight.map(Into::into),
             font_style: style.font_style.map(Into::into),
             ..Default::default()

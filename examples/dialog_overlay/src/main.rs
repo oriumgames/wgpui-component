@@ -105,7 +105,7 @@ impl Render for HelloWorld {
 }
 
 fn main() {
-    let app = gpui_platform::application().with_assets(Assets);
+    let app = gpui::Application::new().with_assets(Assets);
 
     app.run(move |cx| {
         gpui_component::init(cx);

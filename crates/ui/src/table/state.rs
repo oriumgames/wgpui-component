@@ -1,5 +1,6 @@
 use std::{ops::Range, rc::Rc, time::Duration};
 
+use crate::compat::FlexExt as _;
 use crate::{
     ActiveTheme, ElementExt, Icon, IconName, StyleSized as _, StyledExt, VirtualListScrollHandle,
     actions::{
@@ -1667,7 +1668,7 @@ where
                                                 [visible_col_range.end..total_cols]
                                                 .iter()
                                                 .map(|g| g.width)
-                                                .sum();
+                                                .fold(px(0.), |a, b| a + b);
                                             r.child(div().w(right_spacer).h_full().flex_shrink_0())
                                         })
                                         .child(self.delegate.render_last_empty_col(window, cx))

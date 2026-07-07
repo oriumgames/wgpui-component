@@ -135,7 +135,7 @@ fn main() {
         std::env::set_var("GPUI_DISABLE_DIRECT_COMPOSITION", "true");
     }
 
-    gpui_platform::application().run(move |cx| {
+    gpui::Application::new().run(move |cx| {
         // This must be called before using any GPUI Component features.
         gpui_component::init(cx);
 

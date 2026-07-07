@@ -1,3 +1,4 @@
+use crate::compat::{Accessible as _, Role};
 use std::rc::Rc;
 
 use crate::{
@@ -6,8 +7,8 @@ use crate::{
 };
 use gpui::{
     AnyElement, App, Axis, Div, ElementId, InteractiveElement, IntoElement, ParentElement,
-    RenderOnce, Role, SharedString, StatefulInteractiveElement, StyleRefinement, Styled, Window,
-    div, prelude::FluentBuilder, px, relative, rems,
+    RenderOnce, SharedString, StatefulInteractiveElement, StyleRefinement, Styled, Window, div,
+    prelude::FluentBuilder, px, relative, rems,
 };
 
 /// A Radio element.
@@ -170,9 +171,7 @@ impl RenderOnce for Radio {
                 .when_some(self.position_in_set, |this, pos| {
                     this.aria_position_in_set(pos)
                 })
-                .when_some(self.size_of_set, |this, size| {
-                    this.aria_size_of_set(size)
-                })
+                .when_some(self.size_of_set, |this, size| this.aria_size_of_set(size))
                 .when(!self.disabled, |this| {
                     this.track_focus(
                         &focus_handle

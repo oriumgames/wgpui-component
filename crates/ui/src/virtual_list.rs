@@ -10,6 +10,7 @@
 //! Unlike the `uniform_list`, the each item can have different size.
 //!
 //! This is useful for more complex layout, for example, a table with different row height.
+use crate::compat::PixelsExt as _;
 use std::{
     cell::RefCell,
     cmp,

@@ -1,3 +1,4 @@
+use crate::compat::PixelsExt as _;
 use gpui::Corners;
 use gpui::Half;
 use gpui::{
@@ -905,10 +906,11 @@ impl TextElement {
                 &[TextRun {
                     len: line_number_len,
                     font: style.font(),
-                    color: gpui::black(),
+                    color: gpui::black().into(),
                     background_color: None,
                     underline: None,
                     strikethrough: None,
+                    letter_spacing: None,
                 }],
                 None,
             );
@@ -959,10 +961,11 @@ impl TextElement {
             &[TextRun {
                 len: space_text.len(),
                 font: style.font(),
-                color: invisible_color,
+                color: invisible_color.into(),
                 background_color: None,
                 underline: None,
                 strikethrough: None,
+                letter_spacing: None,
             }],
             None,
         );
@@ -974,10 +977,11 @@ impl TextElement {
             &[TextRun {
                 len: tab_text.len(),
                 font: style.font(),
-                color: invisible_color,
+                color: invisible_color.into(),
                 background_color: None,
                 underline: None,
                 strikethrough: None,
+                letter_spacing: None,
             }],
             None,
         );
@@ -1031,10 +1035,11 @@ impl TextElement {
             let first_run = TextRun {
                 len: first_text.len(),
                 font: font.clone(),
-                color: completion_color,
+                color: completion_color.into(),
                 background_color: None,
                 underline: None,
                 strikethrough: None,
+                letter_spacing: None,
             };
             Some(
                 window
@@ -1054,10 +1059,11 @@ impl TextElement {
                 let run = TextRun {
                     len,
                     font: font.clone(),
-                    color: completion_color,
+                    color: completion_color.into(),
                     background_color: None,
                     underline: None,
                     strikethrough: None,
+                    letter_spacing: None,
                 };
                 // Use space for empty lines so they take up height
                 let shaped_text = if text.is_empty() { " ".into() } else { text };
@@ -1570,7 +1576,7 @@ impl Element for TextElement {
         let text_style = window.text_style();
         let disabled = state.disabled;
         let dim = |color: Hsla| if disabled { color.opacity(0.5) } else { color };
-        let fg = dim(text_style.color);
+        let fg = dim(text_style.color.to_hsla());
         let (display_text, text_color) = if is_empty {
             (
                 &Rope::from(placeholder.as_str()),
@@ -1667,15 +1673,16 @@ impl Element for TextElement {
         let run = TextRun {
             len: display_text.len(),
             font: style.font(),
-            color: text_color,
+            color: text_color.into(),
             background_color: None,
             underline: None,
             strikethrough: None,
+            letter_spacing: None,
         };
         let marked_run = TextRun {
             len: 0,
             font: style.font(),
-            color: text_color,
+            color: text_color.into(),
             background_color: None,
             underline: Some(UnderlineStyle {
                 thickness: px(1.),
@@ -1683,6 +1690,7 @@ impl Element for TextElement {
                 wavy: false,
             }),
             strikethrough: None,
+            letter_spacing: None,
         };
 
         let runs = if !is_empty {
@@ -1702,7 +1710,7 @@ impl Element for TextElement {
                     }
 
                     if disabled {
-                        run.color = run.color.opacity(0.5)
+                        run.color = run.color.with_opacity(0.5)
                     }
 
                     run
@@ -1769,10 +1777,11 @@ impl Element for TextElement {
                     &[TextRun {
                         len: longest_line.len(),
                         font: style.font(),
-                        color: gpui::black(),
+                        color: gpui::black().into(),
                         background_color: None,
                         underline: None,
                         strikethrough: None,
+                        letter_spacing: None,
                     }],
                     wrap_width,
                 )
@@ -1871,18 +1880,20 @@ impl Element for TextElement {
             let other_line_runs = vec![TextRun {
                 len: line_number_len,
                 font: style.font(),
-                color: cx.theme().muted_foreground,
+                color: cx.theme().muted_foreground.into(),
                 background_color: None,
                 underline: None,
                 strikethrough: None,
+                letter_spacing: None,
             }];
             let current_line_runs = vec![TextRun {
                 len: line_number_len,
                 font: style.font(),
-                color: cx.theme().foreground,
+                color: cx.theme().foreground.into(),
                 background_color: None,
                 underline: None,
                 strikethrough: None,
+                letter_spacing: None,
             }];
 
             // build line numbers
@@ -2145,14 +2156,8 @@ impl Element for TextElement {
                     window.paint_quad(fill(ghost_bounds, editor_background));
 
                     // Paint ghost line text
-                    _ = ghost_line.paint(
-                        ghost_p,
-                        line_height,
-                        text_align,
-                        Some(prepaint.last_layout.content_width),
-                        window,
-                        cx,
-                    );
+                    // wgpui: ShapedLine::paint has no align/bounds params.
+                    _ = ghost_line.paint(ghost_p, line_height, window, cx);
                     offset_y += line_height;
                 }
             }
@@ -2217,7 +2222,7 @@ impl Element for TextElement {
                 }
 
                 for line in lines {
-                    _ = line.paint(p, line_height, TextAlign::Left, None, window, cx);
+                    _ = line.paint(p, line_height, window, cx);
                     offset_y += line_height;
                 }
 
@@ -2267,7 +2272,7 @@ impl Element for TextElement {
                     window.paint_quad(fill(bg_bounds, editor_background));
 
                     // Paint first line completion text
-                    _ = first_line.paint(p, line_height, text_align, None, window, cx);
+                    _ = first_line.paint(p, line_height, window, cx);
                 }
             }
         }
@@ -2376,7 +2381,7 @@ fn split_runs_by_bg_segments(
             if run_len > 0 {
                 result.push(TextRun {
                     len: run_len,
-                    color: text_color,
+                    color: text_color.into(),
                     ..run.clone()
                 });
 
@@ -2461,10 +2466,11 @@ mod tests {
         let run = TextRun {
             len: 0,
             font: gpui::font(".SystemUIFont"),
-            color: gpui::black(),
+            color: gpui::black().into(),
             background_color: None,
             underline: None,
             strikethrough: None,
+            letter_spacing: None,
         };
 
         // use hello this-is-test
@@ -2519,10 +2525,11 @@ mod tests {
         let run = TextRun {
             len: 0,
             font: gpui::font(".SystemUIFont"),
-            color: gpui::black(),
+            color: gpui::black().into(),
             background_color: None,
             underline: None,
             strikethrough: None,
+            letter_spacing: None,
         };
 
         let runs = vec![
@@ -2557,10 +2564,11 @@ mod tests {
         let run = TextRun {
             len: 0,
             font: gpui::font(".SystemUIFont"),
-            color: gpui::blue(),
+            color: gpui::blue().into(),
             background_color: None,
             underline: None,
             strikethrough: None,
+            letter_spacing: None,
         };
 
         let runs = vec![
@@ -2584,12 +2592,12 @@ mod tests {
             result.iter().map(|run| run.len).collect::<Vec<_>>(),
             vec![3, 2, 2, 5, 1, 23]
         );
-        assert_eq!(result[0].color, gpui::blue());
-        assert_eq!(result[1].color, gpui::black());
-        assert_eq!(result[2].color, gpui::black());
-        assert_eq!(result[3].color, gpui::black());
-        assert_eq!(result[4].color, gpui::black());
-        assert_eq!(result[5].color, gpui::blue());
+        assert_eq!(result[0].color, gpui::blue().into());
+        assert_eq!(result[1].color, gpui::black().into());
+        assert_eq!(result[2].color, gpui::black().into());
+        assert_eq!(result[3].color, gpui::black().into());
+        assert_eq!(result[4].color, gpui::black().into());
+        assert_eq!(result[5].color, gpui::blue().into());
     }
 
     #[test]

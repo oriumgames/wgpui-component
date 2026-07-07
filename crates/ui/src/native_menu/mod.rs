@@ -247,7 +247,6 @@ fn image_format(path: &str, bytes: &[u8]) -> Option<ImageFormat> {
             "bmp" => ImageFormat::Bmp,
             "tif" | "tiff" => ImageFormat::Tiff,
             "ico" => ImageFormat::Ico,
-            "pbm" | "pgm" | "ppm" | "pnm" => ImageFormat::Pnm,
             _ => return None,
         };
         return Some(format);
@@ -275,11 +274,6 @@ fn image_format_from_bytes(bytes: &[u8]) -> Option<ImageFormat> {
         Some(ImageFormat::Ico)
     } else if is_svg_bytes(bytes) {
         Some(ImageFormat::Svg)
-    } else if matches!(
-        bytes.get(0..2),
-        Some(b"P1" | b"P2" | b"P3" | b"P4" | b"P5" | b"P6")
-    ) {
-        Some(ImageFormat::Pnm)
     } else {
         None
     }
@@ -309,18 +303,19 @@ impl From<gpui::Menu> for NativeMenu {
                     name,
                     action,
                     checked,
-                    disabled,
                     ..
                 } => native.items.push(NativeMenuItem::Item {
                     label: name,
-                    disabled,
+                    // wgpui: MenuItem::Action has no `disabled` field.
+                    disabled: false,
                     checked,
                     icon: None,
                     action: Some(action),
                 }),
                 gpui::MenuItem::Submenu(submenu) => native.items.push(NativeMenuItem::Submenu {
                     label: submenu.name.clone(),
-                    disabled: submenu.disabled,
+                    // wgpui: Menu/Submenu has no `disabled` field.
+                    disabled: false,
                     items: Self::from(submenu).items,
                 }),
                 gpui::MenuItem::SystemMenu(_) => {}

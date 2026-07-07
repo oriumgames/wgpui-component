@@ -1,5 +1,6 @@
 use std::{cell::RefCell, ops::Range, rc::Rc};
 
+use crate::compat::FlexExt as _;
 use gpui::{
     App, Context, ElementId, Entity, EventEmitter, FocusHandle, InteractiveElement as _,
     IntoElement, KeyBinding, ListSizingBehavior, MouseButton, ParentElement, Render, RenderOnce,

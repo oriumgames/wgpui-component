@@ -1,4 +1,5 @@
 use crate::ActiveTheme;
+use crate::compat::PixelsExt as _;
 use gpui::{
     App, BoxShadow, Corners, DefiniteLength, Div, Edges, FocusHandle, Hsla, ParentElement, Pixels,
     Refineable, StyleRefinement, Styled, Window, div, point, px,
@@ -36,7 +37,6 @@ pub fn box_shadow(
         offset: point(x.into(), y.into()),
         blur_radius: blur.into(),
         spread_radius: spread.into(),
-        inset: false,
         color,
     }
 }

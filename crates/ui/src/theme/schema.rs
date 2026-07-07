@@ -943,7 +943,7 @@ impl Theme {
 
 #[cfg(test)]
 mod tests {
-    use gpui::{linear_color_stop, linear_gradient};
+    use gpui::linear_gradient;
 
     use crate::{Theme, ThemeConfig, ThemeMode, ThemeSet, try_parse_color};
 
@@ -970,8 +970,8 @@ mod tests {
             theme.tokens.primary.background,
             linear_gradient(
                 135.,
-                linear_color_stop(primary_from, 0.),
-                linear_color_stop(primary_to, 1.)
+                gpui::gradient_color_stop(primary_from, 0.),
+                gpui::gradient_color_stop(primary_to, 1.)
             )
         );
         assert_eq!(
@@ -982,8 +982,8 @@ mod tests {
             theme.tokens.button_primary_hover.background,
             linear_gradient(
                 90.,
-                linear_color_stop(crate::red_500(), 0.25),
-                linear_color_stop(crate::blue_600(), 0.75)
+                gpui::gradient_color_stop(crate::red_500(), 0.25),
+                gpui::gradient_color_stop(crate::blue_600(), 0.75)
             )
         );
         assert_eq!(theme.mode, ThemeMode::Light);
@@ -1062,8 +1062,8 @@ mod tests {
             theme.tokens.table_active.background,
             linear_gradient(
                 180.,
-                linear_color_stop(faint.alpha(faint.a.min(0.2)), 0.),
-                linear_color_stop(blue.alpha(0.2), 1.),
+                gpui::gradient_color_stop(faint.alpha(faint.a.min(0.2)), 0.),
+                gpui::gradient_color_stop(blue.alpha(0.2), 1.),
             )
         );
 
@@ -1074,8 +1074,8 @@ mod tests {
             theme.tokens.selection.background,
             linear_gradient(
                 180.,
-                linear_color_stop(clear.alpha(clear.a.min(0.3)), 0.),
-                linear_color_stop(blue.alpha(0.3), 1.),
+                gpui::gradient_color_stop(clear.alpha(clear.a.min(0.3)), 0.),
+                gpui::gradient_color_stop(blue.alpha(0.3), 1.),
             )
         );
     }

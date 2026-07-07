@@ -1,3 +1,4 @@
+use crate::compat::{Accessible as _, Role};
 use std::rc::Rc;
 
 use crate::{
@@ -10,8 +11,8 @@ use crate::{
 use gpui::{
     AnyElement, App, Background, ClickEvent, Corners, Div, Edges, ElementId, Hsla,
     InteractiveElement, Interactivity, IntoElement, MouseButton, ParentElement, Pixels, RenderOnce,
-    Role, SharedString, Stateful, StatefulInteractiveElement as _, StyleRefinement, Styled, Window,
-    div, prelude::FluentBuilder as _, px, relative, transparent_white,
+    SharedString, Stateful, StatefulInteractiveElement as _, StyleRefinement, Styled, Window, div,
+    prelude::FluentBuilder as _, px, relative, transparent_white,
 };
 
 #[derive(Default, Clone, Copy)]
@@ -1147,7 +1148,7 @@ impl ButtonVariant {
 #[cfg(test)]
 mod tests {
     use super::*;
-    use gpui::{linear_color_stop, linear_gradient};
+    use gpui::linear_gradient;
 
     #[gpui::test]
     fn test_button_builder(_cx: &mut gpui::TestAppContext) {
@@ -1340,8 +1341,8 @@ mod tests {
                 ButtonVariant::Danger.normal(false, cx).bg,
                 linear_gradient(
                     180.,
-                    linear_color_stop(crate::try_parse_color("#FEF2F2").unwrap(), 0.),
-                    linear_color_stop(crate::try_parse_color("#FEE2E2").unwrap(), 1.)
+                    gpui::gradient_color_stop(crate::try_parse_color("#FEF2F2").unwrap(), 0.),
+                    gpui::gradient_color_stop(crate::try_parse_color("#FEE2E2").unwrap(), 1.)
                 )
             );
         });

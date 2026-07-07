@@ -1,3 +1,4 @@
+use crate::compat::{Accessible as _, Role};
 use crate::{
     Selectable, Sizable,
     actions::{Cancel, SelectLeft, SelectRight},
@@ -9,7 +10,7 @@ use crate::{
 use gpui::{
     App, AppContext as _, ClickEvent, Context, DismissEvent, Entity, FocusHandle, Focusable,
     InteractiveElement as _, IntoElement, KeyBinding, MouseButton, OwnedMenu, ParentElement,
-    Render, Role, SharedString, StatefulInteractiveElement, Styled, Subscription, Window, anchored,
+    Render, SharedString, StatefulInteractiveElement, Styled, Subscription, Window, anchored,
     deferred, div, prelude::FluentBuilder, px,
 };
 
@@ -269,7 +270,7 @@ impl Render for AppMenu {
             .when(is_selected, |this| {
                 this.child(deferred(
                     anchored()
-                        .anchor(gpui::Anchor::TopLeft)
+                        .anchor(gpui::Corner::TopLeft)
                         .snap_to_window_with_margin(px(8.))
                         .child(
                             div()
